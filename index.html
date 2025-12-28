@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visual Artist Portfolio | MUHAMMAD NAFI</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Syncopate:wght@700&family=Outfit:wght@200;400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- CSS STYLES --- */
+        :root {
+            --bg: #0d0d0d;
+            --text: #ffffff;
+            --accent: #ff3e00; /* Warna oranye elektrik */
+            --glass: rgba(255, 255, 255, 0.03);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; cursor: none; }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text);
+            font-family: 'Outfit', sans-serif;
+            overflow-x: hidden;
+            line-height: 1.5;
+        }
+
+        /* Custom Cursor */
+        #cursor {
+            position: fixed;
+            width: 8px; height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+        }
+        #cursor-follower {
+            position: fixed;
+            width: 40px; height: 40px;
+            border: 1px solid var(--accent);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease-out;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0; width: 100%;
+            padding: 40px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+        }
+        .logo { font-family: 'Syncopate', sans-serif; font-weight: 700; letter-spacing: 5px; font-size: 1rem; }
+        .nav-year { opacity: 0.4; font-size: 0.8rem; letter-spacing: 2px; }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        .hero-label { font-size: 0.7rem; letter-spacing: 10px; text-transform: uppercase; margin-bottom: 20px; color: var(--accent); }
+        .hero h1 {
+            font-family: 'Syncopate', sans-serif;
+            font-size: clamp(3rem, 12vw, 9rem);
+            line-height: 0.85;
+            text-transform: uppercase;
+        }
+
+        /* Marquee Running Text */
+        .marquee {
+            padding: 30px 0;
+            background: var(--accent);
+            color: #000;
+            overflow: hidden;
+            display: flex;
+            font-family: 'Syncopate', sans-serif;
+            font-weight: 700;
+            font-size: 1.2rem;
+            transform: rotate(-1deg);
+            width: 110%;
+            margin-left: -5%;
+        }
+        .marquee-content {
+            display: flex;
+            white-space: nowrap;
+            animation: marquee 20s linear infinite;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* Gallery Grid */
+        .container { padding: 150px 8%; }
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 120px 60px;
+        }
+        .art-item { position: relative; width: 100%; }
+        .art-item:nth-child(even) { margin-top: 150px; }
+
+        .img-box {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 4/5;
+            overflow: hidden;
+            background: #1a1a1a;
+            border-radius: 2px;
+        }
+        .img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            filter: grayscale(1);
+            transition: 1.5s cubic-bezier(0.19, 1, 0.22, 1);
+            transform: scale(1.1);
+        }
+        .art-item:hover .img-box img {
+            filter: grayscale(0);
+            transform: scale(1);
+        }
+
+        .art-meta {
+            margin-top: 25px;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            font-family: 'Syncopate', sans-serif;
+        }
+        .art-meta h3 { font-size: 0.8rem; letter-spacing: 2px; }
+        .art-meta span { font-size: 0.6rem; opacity: 0.4; }
+
+        /* Contact Section */
+        .footer {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+        .footer p { font-size: 1rem; opacity: 0.5; margin-bottom: 20px; }
+        .contact-cta {
+            font-family: 'Syncopate', sans-serif;
+            font-size: clamp(2rem, 10vw, 6rem);
+            color: transparent;
+            -webkit-text-stroke: 1px var(--text);
+            text-decoration: none;
+            transition: 0.5s;
+        }
+        .contact-cta:hover { color: var(--text); -webkit-text-stroke: 1px var(--bg); }
+
+        .social-bar { margin-top: 60px; display: flex; gap: 30px; font-size: 1.2rem; }
+        .social-bar a { color: var(--text); opacity: 0.3; transition: 0.3s; }
+        .social-bar a:hover { opacity: 1; color: var(--accent); }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .gallery-grid { grid-template-columns: 1fr; gap: 60px; }
+            .art-item:nth-child(even) { margin-top: 0; }
+            * { cursor: auto !important; }
+            #cursor, #cursor-follower { display: none; }
+            nav { padding: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="cursor"></div>
+    <div id="cursor-follower"></div>
+
+    <nav>
+        <div class="logo">DESAIN ILUSTRATOR</div>
+        <div class="nav-year">© 2025 EDITION</div>
+    </nav>
+
+    <section class="hero">
+        <div class="hero-label">Portfolio Koleksi</div>
+        <h1>WORKS &<br>CURATION</h1>
+    </section>
+
+    <div class="marquee">
+        <div class="marquee-content">
+            <span>&nbsp; PROJECT ARCHIVE // VISUAL ART // DIGITAL SKETCH // ILLUSTRATION // &nbsp;</span>
+            <span>&nbsp; PROJECT ARCHIVE // VISUAL ART // DIGITAL SKETCH // ILLUSTRATION // &nbsp;</span>
+        </div>
+    </div>
+
+    <main class="container">
+        <div class="gallery-grid">
+            
+            <div class="art-item">
+                <div class="img-box"><img src="projek/1.jpg" alt="Karya 1"></div>
+                <div class="art-meta"><h3>PROJEK_01</h3><span>2025</span></div>
+            </div>
+
+            <div class="art-item">
+                <div class="img-box"><img src="projek/2.jpg" alt="Karya 2"></div>
+                <div class="art-meta"><h3>PROJEK_02</h3><span>2025</span></div>
+            </div>
+
+            <div class="art-item">
+                <div class="img-box"><img src="projek/3.jpg" alt="Karya 3"></div>
+                <div class="art-meta"><h3>PROJEK_03</h3><span>2025</span></div>
+            </div>
+
+            <div class="art-item">
+                <div class="img-box"><img src="projek/4.jpg" alt="Karya 4"></div>
+                <div class="art-meta"><h3>PROJEK_04</h3><span>2025</span></div>
+            </div>
+
+            <div class="art-item">
+                <div class="img-box"><img src="projek/5.jpg" alt="Karya 5"></div>
+                <div class="art-meta"><h3>PROJEK_05</h3><span>2025</span></div>
+            </div>
+
+            <div class="art-item">
+                <div class="img-box"><img src="projek/6.jpg" alt="Karya 6"></div>
+                <div class="art-meta"><h3>PROJEK_06</h3><span>2025</span></div>
+            </div>
+
+            <div class="art-item">
+                <div class="img-box"><img src="projek/7.jpg" alt="Karya 7"></div>
+                <div class="art-meta"><h3>PROJEK_07</h3><span>2025</span></div>
+            </div>
+
+            <div class="art-item">
+                <div class="img-box"><img src="projek/8.jpg" alt="Karya 8"></div>
+                <div class="art-meta"><h3>PROJEK_08</h3><span>2025</span></div>
+            </div>
+
+            <div class="art-item">
+                <div class="img-box"><img src="projek/9.jpg" alt="Karya 9"></div>
+                <div class="art-meta"><h3>PROJEK_09</h3><span>2025</span></div>
+            </div>
+
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>Tertarik dengan gaya visual saya?</p>
+        <a href="mailto:nafi0500d@gmail.com" class="contact-cta">START PROJECT</a>
+        <div class="social-bar">
+            <a href="https://www.instagram.com/chaerunafi/#"><i class="fab fa-instagram"></i></a>
+            <a href="https://wa.me/62882003103751"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://shantera22.github.io/shantera/"><i class="fab fa-chrome"></i></a>
+        </div>
+    </footer>
+
+    <script>
+        // --- JAVASCRIPT LOGIC ---
+
+        // 1. Custom Cursor Movement
+        const cursor = document.getElementById('cursor');
+        const follower = document.getElementById('cursor-follower');
+
+        document.addEventListener('mousemove', (e) => {
+            const x = e.clientX;
+            const y = e.clientY;
+            
+            cursor.style.transform = `translate3d(${x}px, ${y}px, 0)`;
+            follower.style.transform = `translate3d(${x - 20}px, ${y - 20}px, 0)`;
+        });
+
+        // 2. Cursor Hover Effects
+        const interactive = document.querySelectorAll('.art-item, .contact-cta, a');
+        interactive.forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                follower.style.transform += ' scale(2.5)';
+                follower.style.background = 'rgba(255, 62, 0, 0.1)';
+            });
+            el.addEventListener('mouseleave', () => {
+                follower.style.transform = follower.style.transform.replace(' scale(2.5)', '');
+                follower.style.background = 'none';
+            });
+        });
+
+        // 3. Scroll Reveal Animation
+        const observerOptions = { threshold: 0.1 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = "1";
+                    entry.target.style.transform = "translateY(0)";
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.art-item').forEach(item => {
+            item.style.opacity = "0";
+            item.style.transform = "translateY(80px)";
+            item.style.transition = "all 1s cubic-bezier(0.19, 1, 0.22, 1)";
+            observer.observe(item);
+        });
+    </script>
+</body>
+</html>
